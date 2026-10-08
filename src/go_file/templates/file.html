@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ f.name }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="row"><h2>{{ f.name }}</h2><span class="tag">file #{{ f.id }}</span><span class="tag g">{{ f.size|filesizeformat }}</span></div>
+  <p class="sub">Stored {{ f.created_at.strftime('%Y-%m-%d %H:%M:%S') if f.created_at else 'unknown' }} on the <b>{{ f.storage }}</b> backend.</p>
+  <div class="grid2">
+    <div><label>SHA-256</label><div class="mono">{{ f.sha256 }}</div></div>
+    <div><label>Blob path</label><div class="mono">{{ f.path }}</div></div>
+  </div>
+</div>
+<div class="card">
+  <h2>Share links</h2>
+  <p class="sub">A share page asks for the password from a browser; <span class="mono">/dl/&lt;token&gt;</span> streams the file.</p>
+  <table>
+    <tr><th>Token</th><th>Created</th><th>Expires</th><th>Downloads</th><th>Share page</th><th>Download</th></tr>
+    {% for l in links %}
+    <tr>
+      <td class="mono">{{ l.token }}</td>
+      <td class="mono">{{ l.created_at.strftime('%Y-%m-%d %H:%M') if l.created_at else '' }}</td>
+      <td>{% if l.expires_at %}<span class="tag a">{{ l.expires_at.strftime('%Y-%m-%d %H:%M') }}</span>{% else %}<span class="tag g">never</span>{% endif %}</td>
+      <td>{{ l.downloads }}{% if l.max_downloads %} / {{ l.max_downloads }}{% endif %}</td>
+      <td><a href="{{ url_for('share_page', token=l.token) }}">/share/{{ l.token }}</a></td>
+      <td><a href="{{ url_for('share.download', token=l.token) }}">/dl/{{ l.token }}</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="empty">No share links for this file yet — create one below.</td></tr>
+    {% endfor %}
+  </table>
+  <form method="post" action="{{ url_for('add_link', fid=f.id) }}" class="row" style="margin-top:14px">
+    <div><label>Expiry</label>
+      <select name="expiry">
+        <option value="">never</option>
+        <option value="1h">1 hour</option>
+        <option value="24h">24 hours</option>
+        <option value="7d">7 days</option>
+        <option value="30d">30 days</option>
+      </select></div>
+    <div><label>Password (optional)</label><input name="password" type="password" placeholder="share password"></div>
+    <div><label>Max downloads (0 = unlimited)</label><input name="max_downloads" type="number" min="0" value="0" style="width:120px"></div>
+    <div style="align-self:flex-end"><button class="btn" type="submit">New link</button></div>
+  </form>
+</div>
+<div class="card">
+  <h2>Danger zone</h2>
+  <p class="sub">Deletes the database row, every share link and the blob on disk.</p>
+  <form method="post" action="{{ url_for('delete_file', fid=f.id) }}">
+    <button class="btn danger" type="submit">Delete this file</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Share · {{ app_name }}{% endblock %}
+{% block content %}
+{% if need_password %}
+<div class="card">
+  <h2>Password required</h2>
+  <p class="sub">This share link is protected.</p>
+  <form method="post" action="{{ url_for('share_page', token=token) }}">
+    <div class="row">
+      <div><label>Password</label><input name="password" type="password" required autofocus></div>
+      <div style="align-self:flex-end"><button class="btn" type="submit">Unlock</button></div>
+    </div>
+    {% if err %}<p class="sub" style="color:var(--red);margin-top:10px">Rejected: {{ err }}</p>{% endif %}
+  </form>
+</div>
+{% elif err %}
+<div class="card">
+  <h2>Link unavailable</h2>
+  <p class="sub">The share token <span class="mono">{{ token }}</span> is not usable: <b>{{ err }}</b>.</p>
+  <a class="btn ghost" href="{{ url_for('index') }}">Back to upload</a>
+</div>
+{% else %}
+<div class="card">
+  <div class="row"><h2>{{ f.name }}</h2><span class="tag g">ready</span></div>
+  <p class="sub">{{ f.size|filesizeformat }} · token <span class="mono">{{ link.token }}</span></p>
+  <div class="row">
+    <a class="btn" href="{{ url_for('share.download', token=token) }}">Download</a>
+    <span class="mono">{{ request.url_root }}dl/{{ token }}</span>
+  </div>
+  <p class="sub" style="margin-top:12px">
+    downloads {{ link.downloads }}{% if link.max_downloads %} of {{ link.max_downloads }}{% endif %} ·
+    {% if link.expires_at %}expires {{ link.expires_at.strftime('%Y-%m-%d %H:%M') }}{% else %}no expiry{% endif %} ·
+    {% if link.password_hash %}password protected{% else %}no password{% endif %}
+  </p>
+</div>
+{% endif %}
+{% endblock %}

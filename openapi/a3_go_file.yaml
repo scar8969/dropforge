@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: "📦 go-file"
+  version: 0.1.0
+paths:
+  /api/upload:
+    post:
+      summary: upload file
+      responses:
+        "200":
+          description: stored; returns file_id, token and share URL
+        "400":
+          description: no file part in the multipart body
+  /s/<token>:
+    get:
+      summary: share page
+      responses:
+        "200":
+          description: link is live; returns the download URL, or need_password when the link is protected
+        "403":
+          description: token is unknown or its password check failed
+        "410":
+          description: token existed but the link expired
+    post:
+      summary: unlock
+      responses:
+        "200":
+          description: password accepted; returns the download URL
+        "403":
+          description: token is unknown, expired, out of downloads, or the password was wrong
+  /dl/<token>:
+    get:
+      summary: download
+      responses:
+        "200":
+          description: file bytes as an attachment
+        "403":
+          description: token unknown, expired, password-protected without an unlock, or the download cap is spent
+  /api/files:
+    get:
+      summary: list
+      responses:
+        "200":
+          description: every stored file with its link and download counts
+  /api/files/<id>:
+    delete:
+      summary: delete
+      responses:
+        "200":
+          description: row and stored bytes removed
+        "404":
+          description: no file with that id
