@@ -23,11 +23,11 @@ This README is a measured document. Every number in it was produced on this exac
 | Signal | Measured value | How it was measured |
 | --- | --- | --- |
 | Tests passed | **131 / 131** | `python -m pytest -q` (exit code 0) |
-| Test wall clock | 16.00 s | junit-xml suite time |
+| Test wall clock | 17.39 s | junit-xml suite time |
 | Line coverage | **100.0%** | 753 of 753 statements executed, 0 missed |
 | Source size | 1,497 lines / 15 modules | counted under `src/` |
 | Test size | 1,369 lines / 14 files | counted under `tests/` |
-| Documentation | 539 lines / 5 files | counted under `docs/` |
+| Documentation | 556 lines / 5 files | counted under `docs/` |
 | Routes probed | 13 GET routes, 9 answered 200 | real HTTP against `127.0.0.1:<port>` |
 | Total bytes served | 15.9 KB | 13 responses summed |
 | Median response | 13.4 ms | median of 13 measured round trips |
@@ -253,7 +253,7 @@ Configuration is environment-only, in the twelve-factor sense: nothing is read f
 
 | Gate | Command | Result in this checkout |
 | --- | --- | --- |
-| Tests | `python -m pytest -q` | **131 passed, 0 failed, 0 errors** in 16.00 s |
+| Tests | `python -m pytest -q` | **131 passed, 0 failed, 0 errors** in 17.39 s |
 | Coverage | `python -m pytest --cov=src/go_file` | **100.0%** of 753 statements (0 missed) |
 | Lint | `python -m pyflakes src tests conftest.py wsgi.py` | **0 findings** in this checkout (pyflakes is the static checker available here; ruff cannot run on this host) |
 | Types | `python -m mypy --config-file mypy.ini src` | **no issues found in 15 source files** in this checkout |
