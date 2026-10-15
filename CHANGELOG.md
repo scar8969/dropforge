@@ -10,7 +10,69 @@ this project adheres to Semantic Versioning
 
 ### Added
 
-- Nothing yet.
+- Recorded quality-gate evidence, quoted verbatim in
+  [docs/EVIDENCE.md](docs/EVIDENCE.md) and in the README: 131 tests passed with
+  0 failures and 0 errors, and 100.00% statement coverage over 753 statements,
+  alongside the exact commands that produced both.
+- Strict type annotations across all 15 source modules, so `mypy --strict`
+  reports no issues and `pyflakes` reports no findings.
+- Dependency-free SVG charts of test, coverage, latency, payload, LOC and
+  file-count data under `docs/assets/`, generated from the recorded metrics
+  document and committed so they render on the repository page without a build
+  step.
+- Ten test modules covering the error table, runtime paths, the application
+  factory, observability, the HTTP internals, the three share modules and the
+  CLI. The suite grew from 25 tests to 131.
+- `/api/health` is now declared in `openapi/a3_go_file.yaml`; it was served but
+  undocumented, and the spec is the contract this project publishes.
+
+### Changed
+
+- Every `Query.get()` and `Query.get_or_404()` call became `db.session.get()`
+  and `db.get_or_404()`, removing the SQLAlchemy 2.0 legacy deprecation
+  warnings from the suite.
+- `datetime.utcnow()` is deprecated since 3.12 and warns on every call; the
+  naive-UTC helper is now built from an aware `datetime.now(UTC)`. (It has not
+  been removed in 3.14 - that removal is still only planned.)
+- The development server block (`if __name__ == "__main__"`) moved out of
+  `build_app()`, where it could never be reached from an import and could never
+  be covered, to the module level where the guard actually means something.
+- `docs/OPERATIONS.md` and ADR 0002 now describe the metrics that are actually
+  exported: `http_requests_total{method,status}` and
+  `http_request_duration_seconds_sum{method}`, with no histogram, no count and
+  no p99.
+
+### Fixed
+
+- `GET /s/<token>` on a password-protected link answered `403`. Both the
+  OpenAPI document and the HTML share page promise `200` with
+  `{"need_password": true}`, so a client that trusted the contract was told the
+  link did not exist. It now returns that document.
+- `GET /dl/<token>` crashed in `send_file(None)` when the file row had been
+  deleted but the share link survived. It now answers `404`, the same not-found
+  an unknown token gets.
+- A malformed expiry (`5m`, `abch`) raised `KeyError`/`ValueError` and produced
+  a `500`. It is now a `BadRequest` and a `400` envelope; the upload form only
+  ever offers hours and days.
+- A multipart upload whose part had an empty filename reached
+  `os.path.basename(None)` and produced a `500`. It now gets the same
+  `400 {"error": "no file"}` the page route already returned.
+- Overrides prefixed `GO_FILE_` were ignored: `paths.ENV_PREFIX` was missing its
+  trailing underscore, so the namespaced lookup asked for the unreachable
+  `GO_FILEDATA_DIR`.
+
+### Known limitations
+
+- No screenshot is committed, because no headless browser can start on the host
+  that produced this release: Chrome and Edge both fail on an operating-system
+  access denial and the Playwright bundle fails with `WinError 5`. The HTTP
+  surface is evidenced with recorded status codes, sizes and bodies instead.
+- `ruff`, `bandit` and `pip-audit` are configured but were never executed here:
+  the generating host has no network access. `pyflakes` and `mypy` are the
+  static checks that could run, and both are clean.
+- `S3Storage` is exercised against an injected fake client; the real S3 path has
+  never been run against a bucket.
+- No container image has been built.
 
 ## [0.1.0] - 2026-10-08
 
@@ -49,7 +111,8 @@ it is new.
 
 - ruff, bandit and pip-audit are configured but were never executed: the
   generating sandbox had no network access.
-- The coverage floor is configured but has not been measured here.
+- The coverage floor is configured here; it was measured in the following pass
+  at 100.00%, above the 85% gate.
 - No container image has been built.
 
 [Unreleased]: https://example.invalid/go_file/compare/v0.1.0...HEAD

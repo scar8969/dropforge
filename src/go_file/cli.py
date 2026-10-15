@@ -12,20 +12,29 @@ import os
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Sequence
 
 DEFAULT_BASE = os.environ.get("GOFILE_URL", "http://127.0.0.1:8000")
 
-def _call(method, path, data=None, headers=None, base=None):
+
+def _call(
+    method: str,
+    path: str,
+    data: bytes | None = None,
+    headers: dict[str, str] | None = None,
+    base: str | None = None,
+) -> tuple[int, bytes]:
     req = urllib.request.Request((base or DEFAULT_BASE).rstrip("/") + path,
                                  data=data, method=method, headers=headers or {})
     with urllib.request.urlopen(req) as r:
         return r.status, r.read()
 
-def cmd_put(args):
+
+def cmd_put(args: argparse.Namespace) -> int:
     boundary = "----gofile"
     with open(args.path, "rb") as f:
         data = f.read()
-    fields = []
+    fields: list[bytes] = []
     for name, value in (("expiry", args.expiry), ("password", args.password),
                         ("max_downloads", str(args.limit or 0))):
         if value:
@@ -47,7 +56,8 @@ def cmd_put(args):
     print(json.dumps(json.loads(out.decode()), indent=2))
     return 0
 
-def cmd_ls(args):
+
+def cmd_ls(args: argparse.Namespace) -> int:
     try:
         status, out = _call("GET", "/api/files", base=args.base)
     except urllib.error.HTTPError as exc:
@@ -63,7 +73,8 @@ def cmd_ls(args):
         print("%-6s %-32s %10s %6s %10s" % (f["id"], f["name"][:32], f["size"], f["links"], f["downloads"]))
     return 0
 
-def main(argv=None):
+
+def main(argv: Sequence[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="gofile", description="go-file command line client")
     p.add_argument("--base", default=DEFAULT_BASE, help="base URL of a running instance")
     sub = p.add_subparsers(dest="cmd")
@@ -79,7 +90,9 @@ def main(argv=None):
     ls.set_defaults(func=cmd_ls)
 
     args = p.parse_args(argv)
-    if getattr(args, "func", None) is None:
+    handler = getattr(args, "func", None)
+    if handler is None:
         p.print_help()
         return 0
-    return args.func(args)
+    code: int = handler(args)
+    return code

@@ -3,6 +3,12 @@ info:
   title: "📦 go-file"
   version: 0.1.0
 paths:
+  /api/health:
+    get:
+      summary: application health
+      responses:
+        "200":
+          description: process is up; returns service name and version
   /api/upload:
     post:
       summary: upload file

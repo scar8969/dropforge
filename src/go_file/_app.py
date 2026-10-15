@@ -1,19 +1,22 @@
 import os
 from pathlib import Path
+from typing import Any
 
-from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
+from flask import Flask, Response, flash, jsonify, redirect, render_template, request, url_for
+from werkzeug.wrappers import Response as WerkzeugResponse
 
+from . import paths
 from .models import File, ShareLink, db
 from .share.api import bp
 from .share.links import check_link, create_link
 from .share.storage import LocalStorage
-from . import paths
 
 paths.INSTANCE_DIR.mkdir(parents=True, exist_ok=True)
 _UPLOAD_ROOT = Path(os.environ.get("UPLOAD_ROOT", str(paths.DATA_DIR)))
 _UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
 
-def build_app():
+
+def build_app() -> Flask:
     """Build the application: configuration, database, then routes."""
     app = Flask(__name__,
                 template_folder=str(paths.TEMPLATES_DIR),
@@ -27,7 +30,7 @@ def build_app():
     app.register_blueprint(bp)
 
     @app.before_request
-    def _rebase_relative_storage_paths():
+    def _rebase_relative_storage_paths() -> None:
         """share/api.py stores File.path relative to the process CWD (./data/...).
         The page routes resolve against UPLOAD_ROOT, so make both agree."""
         for f in File.query.all():
@@ -36,40 +39,40 @@ def build_app():
                 db.session.commit()
 
     @app.context_processor
-    def _ctx():
+    def _ctx() -> dict[str, Any]:
         return {"app_name": "\U0001F4E6 go-file", "upload_root": app.config["UPLOAD_ROOT"]}
 
     @app.get("/api/health")
-    def health():
+    def health() -> Response:
         return jsonify({"status": "ok", "service": "go-file", "version": "0.1.0"})
 
-    def _rows(limit=None):
+    def _rows(limit: int | None = None) -> list[dict[str, Any]]:
         q = File.query.order_by(File.id.desc())
         if limit:
             q = q.limit(limit)
-        out = []
+        out: list[dict[str, Any]] = []
         for f in q.all():
             links = ShareLink.query.filter_by(file_id=f.id).all()
             out.append({"f": f, "links": links,
                         "downloads": sum(l.downloads or 0 for l in links)})
         return out
 
-    def _max_dl():
+    def _max_dl() -> int:
         try:
             return int(request.form.get("max_downloads") or 0)
         except ValueError:
             return 0
 
     @app.get("/")
-    def index():
+    def index() -> str:
         return render_template("index.html", rows=_rows(5), total=File.query.count())
 
     @app.get("/files")
-    def files_page():
+    def files_page() -> str:
         return render_template("files.html", rows=_rows())
 
     @app.post("/upload")
-    def upload_page():
+    def upload_page() -> WerkzeugResponse:
         up = request.files.get("file")
         if not up or not up.filename:
             flash("No file selected.", "error")
@@ -89,22 +92,22 @@ def build_app():
         return redirect(url_for("file_detail", fid=rec.id))
 
     @app.get("/f/<int:fid>")
-    def file_detail(fid):
-        f = File.query.get_or_404(fid)
+    def file_detail(fid: int) -> str:
+        f = db.get_or_404(File, fid)
         links = ShareLink.query.filter_by(file_id=fid).order_by(ShareLink.id.desc()).all()
         return render_template("file.html", f=f, links=links)
 
     @app.post("/f/<int:fid>/link")
-    def add_link(fid):
-        f = File.query.get_or_404(fid)
+    def add_link(fid: int) -> WerkzeugResponse:
+        f = db.get_or_404(File, fid)
         link = create_link(f.id, request.form.get("expiry", ""),
                            request.form.get("password", ""), _max_dl())
         flash("Created share link /share/%s" % link.token, "success")
         return redirect(url_for("file_detail", fid=f.id))
 
     @app.post("/f/<int:fid>/delete")
-    def delete_file(fid):
-        f = File.query.get_or_404(fid)
+    def delete_file(fid: int) -> WerkzeugResponse:
+        f = db.get_or_404(File, fid)
         name, path = f.name, f.path
         for l in ShareLink.query.filter_by(file_id=fid).all():
             db.session.delete(l)
@@ -115,7 +118,7 @@ def build_app():
         return redirect(url_for("files_page"))
 
     @app.route("/share/<token>", methods=["GET", "POST"])
-    def share_page(token):
+    def share_page(token: str) -> str | tuple[str, int]:
         if request.method == "POST":
             link, err = check_link(token, request.form.get("password", ""))
             if err:
@@ -129,13 +132,14 @@ def build_app():
             if err:
                 return render_template("share.html", err=err, need_password=False,
                                        link=None, f=None, token=token), 404
-        f = File.query.get(link.file_id)
+        f = db.session.get(File, link.file_id)
         return render_template("share.html", err=None, need_password=False,
                                link=link, f=f, token=token)
 
-    if __name__ == "__main__":
-        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))
-
     return app
 
+
 app = build_app()
+
+if __name__ == "__main__":  # pragma: no cover - manual development entry point
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))

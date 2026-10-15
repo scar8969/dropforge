@@ -1,0 +1,78 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='473' viewBox='0 0 900 473' role='img' aria-label='Response size per route'>
+<rect width='900' height='473' rx='12' fill='#ffffff' stroke='#d1d9e0'/>
+<text x='26' y='33' font-family='Segoe UI, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif' font-size='17' font-weight='600' fill='#1f2328'>Response size per route</text>
+<text x='26' y='53' font-family='Segoe UI, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif' font-size='12' fill='#59636e'>bytes actually written to the socket</text>
+<line x1='391' y1='72' x2='391' y2='431' stroke='#d1d9e0' stroke-dasharray='3 4'/>
+<text x='391' y='449' font-family='Segoe UI, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif' font-size='10' fill='#59636e' text-anchor='middle'>1.4 KB</text>
+<line x1='525' y1='72' x2='525' y2='431' stroke='#d1d9e0' stroke-dasharray='3 4'/>
+<text x='525' y='449' font-family='Segoe UI, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif' font-size='10' fill='#59636e' text-anchor='middle'>2.8 KB</text>
+<line x1='658' y1='72' x2='658' y2='431' stroke='#d1d9e0' stroke-dasharray='3 4'/>
+<text x='658' y='449' font-family='Segoe UI, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif' font-size='10' fill='#59636e' text-anchor='middle'>4.2 KB</text>
+<line x1='792' y1='72' x2='792' y2='431' stroke='#d1d9e0' stroke-dasharray='3 4'/>
+<text x='792' y='449' font-family='Segoe UI, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif' font-size='10' fill='#59636e' text-anchor='middle'>5.6 KB</text>
+<text x='246' y='93' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/</text>
+<rect x='258' y='82' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='82' width='534' height='15' rx='4' fill='#0d7d78'/>
+<text x='800' y='93' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>5.6 KB</text>
+<text x='248' y='93' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='120' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/files</text>
+<rect x='258' y='109' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='109' width='413' height='15' rx='4' fill='#0d7d78'/>
+<text x='679' y='120' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>4.3 KB</text>
+<text x='248' y='120' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='147' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/share/demo</text>
+<rect x='258' y='136' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='136' width='391' height='15' rx='4' fill='#0d7d78'/>
+<text x='657' y='147' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>4.1 KB</text>
+<text x='248' y='147' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 404</text>
+<text x='246' y='174' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/version</text>
+<rect x='258' y='163' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='163' width='82' height='15' rx='4' fill='#0d7d78'/>
+<text x='348' y='174' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>886 B</text>
+<text x='248' y='174' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='201' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/metrics</text>
+<rect x='258' y='190' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='190' width='33' height='15' rx='4' fill='#0d7d78'/>
+<text x='299' y='201' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>354 B</text>
+<text x='248' y='201' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='228' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/f/demo</text>
+<rect x='258' y='217' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='217' width='19' height='15' rx='4' fill='#0d7d78'/>
+<text x='285' y='228' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>207 B</text>
+<text x='248' y='228' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 404</text>
+<text x='246' y='255' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/dl/demo</text>
+<rect x='258' y='244' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='244' width='14' height='15' rx='4' fill='#0d7d78'/>
+<text x='280' y='255' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>157 B</text>
+<text x='248' y='255' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 403</text>
+<text x='246' y='282' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/s/demo</text>
+<rect x='258' y='271' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='271' width='14' height='15' rx='4' fill='#0d7d78'/>
+<text x='280' y='282' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>157 B</text>
+<text x='248' y='282' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 403</text>
+<text x='246' y='309' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/api/health</text>
+<rect x='258' y='298' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='298' width='5' height='15' rx='4' fill='#0d7d78'/>
+<text x='271' y='309' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>54 B</text>
+<text x='248' y='309' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='336' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/healthz</text>
+<rect x='258' y='325' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='325' width='5' height='15' rx='4' fill='#0d7d78'/>
+<text x='271' y='336' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>54 B</text>
+<text x='248' y='336' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='363' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/readyz</text>
+<rect x='258' y='352' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='352' width='2' height='15' rx='4' fill='#0d7d78'/>
+<text x='268' y='363' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>31 B</text>
+<text x='248' y='363' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='390' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/livez</text>
+<rect x='258' y='379' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='379' width='2' height='15' rx='4' fill='#0d7d78'/>
+<text x='268' y='390' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>19 B</text>
+<text x='248' y='390' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+<text x='246' y='417' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' fill='#1f2328' text-anchor='end'>/api/files</text>
+<rect x='258' y='406' width='534' height='15' rx='4' fill='#eef1f4'/>
+<rect x='258' y='406' width='2' height='15' rx='4' fill='#0d7d78'/>
+<text x='268' y='417' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='12' font-weight='600' fill='#1f2328'>13 B</text>
+<text x='248' y='417' font-family='ui-monospace, SFMono-Regular, Consolas, monospace' font-size='11' fill='#59636e' text-anchor='start'>HTTP 200</text>
+</svg>

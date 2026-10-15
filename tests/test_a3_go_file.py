@@ -1,12 +1,11 @@
 """A3 go-file — tests. Run: pytest test_a3_go_file.py"""
-import sys, os, io, hashlib
+import hashlib
+import importlib.util
+import io
 
 import pytest
-flask_ok = True
-try:
-    import flask_sqlalchemy
-except ImportError:
-    flask_ok = False
+
+flask_ok = importlib.util.find_spec("flask_sqlalchemy") is not None
 
 def test_storage_save_roundtrip(tmp_path):
     from go_file.share.storage import LocalStorage
@@ -37,7 +36,6 @@ def test_check_link_not_found():
 
 @pytest.mark.skipif(not flask_ok, reason="flask-sqlalchemy not installed")
 def test_check_link_password():
-    from go_file.share.links import check_link
     # password hash check without DB: verify the hash function shape
     import hashlib
     h = hashlib.sha256(b"secret").hexdigest()
