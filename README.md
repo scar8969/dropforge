@@ -1,8 +1,8 @@
-# a3-go-file
+# dropforge
 
 [![python: 3.11 %7C 3.12 %7C 3.13](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776ab)](#requirements) [![tests: 131 passed](https://img.shields.io/badge/tests-131%20passed-2ea44f)](#quality-gates) [![coverage: 100.0%25](https://img.shields.io/badge/coverage-100.0%25-brightgreen)](#quality-gates) [![version: 0.1.0](https://img.shields.io/badge/version-0.1.0-0969da)](CHANGELOG.md) [![license: MIT](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
 
-**a3-go-file** is a Flask service packaged the way a production service is packaged: a real package under `src/`, an environment-only configuration contract, structured JSON logs with request correlation, the five operational endpoints an orchestrator expects, a multi-stage container image, and CI gates that keep all of it honest.
+**dropforge** is a Flask service packaged the way a production service is packaged: a real package under `src/`, an environment-only configuration contract, structured JSON logs with request correlation, the five operational endpoints an orchestrator expects, a multi-stage container image, and CI gates that keep all of it honest.
 
 This README is a measured document. Every number in it was produced on this exact checkout by the commands recorded in [docs/EVIDENCE.md](docs/EVIDENCE.md): **131 tests** run under pytest, **753 statements** traced by coverage, and **13 HTTP requests** issued over a real socket to the running server.
 
@@ -88,7 +88,7 @@ Status distribution: **200** x9, **403** x2, **404** x2. No response was a 5xx.
 
 ### Declared API contract
 
-`openapi/a3_go_file.yaml` declares **6 paths** carrying **7 operations** (1 DELETE, 4 GET, 2 POST):
+`openapi/dropforge.yaml` declares **6 paths** carrying **7 operations** (1 DELETE, 4 GET, 2 POST):
 
 | Method | Path |
 | --- | --- |
@@ -131,7 +131,7 @@ Four of these are liveness and readiness plumbing for an orchestrator; `/metrics
 `/version` answered **200**:
 
 ```json
-{"config":{"app_name":"go_file","data_dir":"C:\\Users\\priya\\Desktop\\project-skeletons\\projects\\a3_go_file\\var","database_configured":false,"debug":false,"env":"development","host":"0.0.0.0","legacy_env_present":[],"log_json":true,"log_level":"INFO","port":8000,"secret_key_configured":false},"paths":{"data_dir":"C:\\Users\\priya\\Desktop\\project-skeletons\\projects\\a3_go_file\\var","instanc
+{"config":{"app_name":"go_file","data_dir":".\\var","database_configured":false,"debug":false,"env":"development","host":"0.0.0.0","legacy_env_present":[],"log_json":true,"log_level":"INFO","port":8000,"secret_key_configured":false},"paths":{"data_dir":".\\var","instanc
 ```
 
 ### Headers on every response
@@ -192,9 +192,9 @@ docs/
     payload.svg
     tests.svg
 openapi/
-  a3_go_file.yaml
+  dropforge.yaml
 schema/
-  a3_go_file.sql
+  dropforge.sql
 src/
   go_file/
     __init__.py
@@ -210,7 +210,7 @@ src/
     py.typed
 tests/
   conftest.py
-  test_a3_go_file.py
+  test_dropforge.py
   test_app_factory.py
   test_cli.py
   test_config.py
@@ -268,7 +268,7 @@ Coverage clears the **85%** floor declared in `pyproject.toml` (`fail_under`), s
 | File | def test_* | class Test* |
 | --- | --- | --- |
 | `tests/conftest.py` | 0 | 0 |
-| `tests/test_a3_go_file.py` | 5 | 0 |
+| `tests/test_dropforge.py` | 5 | 0 |
 | `tests/test_app_factory.py` | 5 | 0 |
 | `tests/test_cli.py` | 8 | 0 |
 | `tests/test_config.py` | 9 | 0 |

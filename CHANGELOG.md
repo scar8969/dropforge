@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to a3-go-file are documented here.
+All notable changes to dropforge are documented here.
 
 The format follows Keep a Changelog (https://keepachangelog.com/en/1.1.0/), and
 this project adheres to Semantic Versioning
@@ -23,7 +23,7 @@ this project adheres to Semantic Versioning
 - Ten test modules covering the error table, runtime paths, the application
   factory, observability, the HTTP internals, the three share modules and the
   CLI. The suite grew from 25 tests to 131.
-- `/api/health` is now declared in `openapi/a3_go_file.yaml`; it was served but
+- `/api/health` is now declared in `openapi/dropforge.yaml`; it was served but
   undocumented, and the spec is the contract this project publishes.
 
 ### Changed
@@ -77,7 +77,7 @@ this project adheres to Semantic Versioning
 ## [0.1.0] - 2026-10-08
 
 First release under the current packaging. This is the industry-baseline
-release: the domain behaviour is the original skeleton's, and everything around
+release: the domain behaviour is the original contract's, and everything around
 it is new.
 
 ### Added

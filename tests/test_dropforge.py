@@ -1,4 +1,4 @@
-"""A3 go-file — tests. Run: pytest test_a3_go_file.py"""
+"""A3 go-file — tests. Run: pytest test_dropforge.py"""
 import hashlib
 import importlib.util
 import io

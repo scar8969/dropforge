@@ -9,7 +9,7 @@ they do, and what breaks first under load.
 
 ## 1. Context
 
-a3_go_file is a single-process Flask service. It owns its own database (SQLite by
+dropforge is a single-process Flask service. It owns its own database (SQLite by
 default, any SQLAlchemy-supported backend via `DATABASE_URL`) and is deployed
 behind a reverse proxy or an orchestrator.
 
@@ -74,7 +74,7 @@ flowchart TB
 | `templates/files.html` | asset |
 | `templates/index.html` | asset |
 | `templates/share.html` | asset |
-| `tests/test_a3_go_file.py` | module |
+| `tests/test_dropforge.py` | module |
 | `_app.py` | module |
 
 ---
@@ -137,9 +137,9 @@ writable lives under `/app`.
 
 | Table | Owner |
 | --- | --- |
-| `files` | owned by `a3_go_file` |
-| `share_links` | owned by `a3_go_file` |
-| `download_logs` | owned by `a3_go_file` |
+| `files` | owned by `dropforge` |
+| `share_links` | owned by `dropforge` |
+| `download_logs` | owned by `dropforge` |
 
 Tables are created by the application's own bootstrap on first use. No migration
 tool is wired in; the schema is additive, and the service tolerates a missing or

@@ -34,7 +34,7 @@ RUN groupadd --system --gid 1001 app \
 WORKDIR /app
 
 COPY --from=builder /wheels /wheels
-RUN python -m pip install --no-cache-dir --no-index --find-links=/wheels a3-go-file \
+RUN python -m pip install --no-cache-dir --no-index --find-links=/wheels dropforge \
  && rm -rf /wheels \
  && mkdir -p /var/lib/go_file/instance /var/lib/go_file/log \
  && chown -R app:app /var/lib/go_file /app

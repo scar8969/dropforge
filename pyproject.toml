@@ -3,13 +3,13 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "a3-go-file"
+name = "dropforge"
 version = "0.1.0"
-description = "A small self-hosted file-sharing server: upload a file over HTTP, get back a short share link, and control that link with an optional password, an expiry and a download cap."
+description = "Self-hosted file sharing: upload over HTTP, get a short link, control it with a password, an expiry and a download cap."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "project-skeletons maintainers" }]
+authors = [{ name = "Priyanshu Rout" }]
 keywords = ["flask", "service", "go_file"]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -47,7 +47,7 @@ Documentation = "https://example.invalid/go_file/docs"
 Issues = "https://example.invalid/go_file/issues"
 
 [project.scripts]
-a3-go-file = "go_file.cli:main"
+dropforge = "go_file.cli:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
