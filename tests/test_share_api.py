@@ -111,6 +111,15 @@ def test_download_streams_the_stored_bytes(client):
     assert "attachment" in response.headers["Content-Disposition"]
 
 
+def test_download_accepts_the_password_on_the_query_string(client):
+    token = _upload(client, password="pw").get_json()["token"]
+    assert client.get(f"/dl/{token}").status_code == 403
+    assert client.get(f"/dl/{token}?password=nope").status_code == 403
+    ok = client.get(f"/dl/{token}?password=pw")
+    assert ok.status_code == 200
+    assert ok.data == b"hello"
+
+
 def test_download_enforces_the_cap(client):
     token = _upload(client, max_downloads="1").get_json()["token"]
     assert client.get(f"/dl/{token}").status_code == 200

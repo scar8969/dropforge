@@ -53,7 +53,10 @@ def unlock(token: str) -> Response:
 
 @bp.get("/dl/<token>")
 def download(token: str) -> Response:
-    link, err = check_link(token)
+    # A protected link carries its password on the download request too: the
+    # unlock call only tells the caller which URL to use, it does not mint a
+    # session, so the check has to happen here as well.
+    link, err = check_link(token, request.args.get("password", ""))
     if err:
         abort(403)
     ok, _detail = register_download(link)
