@@ -7,7 +7,7 @@
 <p align="center"><b>Upload a file, get a link you can expire, password and cap.</b></p>
 
 <p align="center">
-  <a href="#quality-gates"><img src="https://img.shields.io/badge/tests-131%20passed-2ea44f" alt="tests: 131 passed"></a> <a href="#quality-gates"><img src="https://img.shields.io/badge/coverage-100.0%-brightgreen" alt="coverage: 100.0%"></a> <a href="#api"><img src="https://img.shields.io/badge/routes-9%20answered-0969da" alt="routes: 9 answered"></a> <a href="#requirements"><img src="https://img.shields.io/badge/python-3.11%2B-3776ab" alt="python: 3.11+"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="license: MIT"></a>
+  <a href="#quality-gates"><img src="https://img.shields.io/badge/tests-132%20passed-2ea44f" alt="tests: 132 passed"></a> <a href="#quality-gates"><img src="https://img.shields.io/badge/coverage-100.0%-brightgreen" alt="coverage: 100.0%"></a> <a href="#api"><img src="https://img.shields.io/badge/routes-9%20answered-0969da" alt="routes: 9 answered"></a> <a href="#requirements"><img src="https://img.shields.io/badge/python-3.11%2B-3776ab" alt="python: 3.11+"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="license: MIT"></a>
 </p>
 
 dropforge is a self-hosted file handoff: upload over HTTP, receive a short token, and control that link with a password, an expiry and a download limit. Every download is counted, and the share page says why a link stopped working.
@@ -105,10 +105,10 @@ These numbers were produced on this checkout by `pytest --cov` and by booting `w
 
 | Signal | Value |
 | --- | --- |
-| Tests | **131 / 131 passed** (22.2 s, exit 0) |
+| Tests | **132 / 132 passed** (18.5 s, exit 0) |
 | Line coverage | **100.0%** — 754 of 754 statements |
 | Source | 15 files / 1,596 lines |
-| Test code | 14 files / 1,393 lines |
+| Test code | 14 files / 1,402 lines |
 | Documented paths | 6 in the spec, 4 GET |
 | Live probe | 13 GET requests to the booted app, **9 answered 200** |
 | Median latency | **17.4 ms** (single uncached request, dev server) |
