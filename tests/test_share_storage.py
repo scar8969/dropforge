@@ -4,6 +4,7 @@ boto3 is a declared dependency that is not installed on this host, so the S3
 backend is driven through a fake module injected into sys.modules; no test
 opens a socket.
 """
+
 from __future__ import annotations
 
 import hashlib

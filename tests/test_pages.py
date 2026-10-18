@@ -1,4 +1,5 @@
 """Server-rendered page contract: upload, inventory, detail and share flows."""
+
 from __future__ import annotations
 
 import io

@@ -3,6 +3,7 @@
 Links are created through the real session against the throwaway database
 installed by the suite-wide conftest.
 """
+
 from __future__ import annotations
 
 import hashlib

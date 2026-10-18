@@ -39,8 +39,13 @@ def create_link(file_id: int, expiry: str = "", password: str = "", max_dl: int 
     pw = None
     if password:
         pw = hashlib.sha256(password.encode()).hexdigest()
-    link = ShareLink(file_id=file_id, token=make_token(), password_hash=pw,
-                     expires_at=expires, max_downloads=max_dl or None)
+    link = ShareLink(
+        file_id=file_id,
+        token=make_token(),
+        password_hash=pw,
+        expires_at=expires,
+        max_downloads=max_dl or None,
+    )
     db.session.add(link)
     db.session.commit()
     return link

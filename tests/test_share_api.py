@@ -3,6 +3,7 @@
 Files are written to the throwaway runtime directory, never var/, and downloads
 are served from disk through the real storage backend.
 """
+
 from __future__ import annotations
 
 import io

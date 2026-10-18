@@ -19,8 +19,12 @@ def upload() -> Response | tuple[Response, int]:
         file = File(name=f.filename, size=size, sha256=sha, storage="local", path=path)
         db.session.add(file)
         db.session.commit()
-    link = create_link(file.id, request.form.get("expiry", ""),
-                       request.form.get("password", ""), int(request.form.get("max_downloads", 0) or 0))
+    link = create_link(
+        file.id,
+        request.form.get("expiry", ""),
+        request.form.get("password", ""),
+        int(request.form.get("max_downloads", 0) or 0),
+    )
     return jsonify({"file_id": file.id, "token": link.token, "url": f"/s/{link.token}"})
 
 
@@ -65,10 +69,22 @@ def download(token: str) -> Response:
 
 @bp.get("/api/files")
 def list_files() -> Response:
-    return jsonify({"files": [{"id": f.id, "name": f.name, "size": f.size,
-                               "links": ShareLink.query.filter_by(file_id=f.id).count(),
-                               "downloads": sum(l.downloads for l in ShareLink.query.filter_by(file_id=f.id).all())}
-                              for f in File.query.all()]})
+    return jsonify(
+        {
+            "files": [
+                {
+                    "id": f.id,
+                    "name": f.name,
+                    "size": f.size,
+                    "links": ShareLink.query.filter_by(file_id=f.id).count(),
+                    "downloads": sum(
+                        l.downloads for l in ShareLink.query.filter_by(file_id=f.id).all()
+                    ),
+                }
+                for f in File.query.all()
+            ]
+        }
+    )
 
 
 @bp.delete("/api/files/<int:fid>")

@@ -3,6 +3,7 @@
 HTTP commands are driven through a stubbed urlopen, so the suite never needs a
 listening server.
 """
+
 from __future__ import annotations
 
 import io

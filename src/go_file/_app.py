@@ -18,9 +18,9 @@ _UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
 
 def build_app() -> Flask:
     """Build the application: configuration, database, then routes."""
-    app = Flask(__name__,
-                template_folder=str(paths.TEMPLATES_DIR),
-                instance_path=str(paths.INSTANCE_DIR))
+    app = Flask(
+        __name__, template_folder=str(paths.TEMPLATES_DIR), instance_path=str(paths.INSTANCE_DIR)
+    )
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + str(paths.INSTANCE_DIR / "gofile.db")
     app.config["UPLOAD_ROOT"] = str(_UPLOAD_ROOT)
     app.secret_key = os.environ.get("SECRET_KEY", "go-file-dev-secret")
@@ -40,7 +40,7 @@ def build_app() -> Flask:
 
     @app.context_processor
     def _ctx() -> dict[str, Any]:
-        return {"app_name": "\U0001F4E6 go-file", "upload_root": app.config["UPLOAD_ROOT"]}
+        return {"app_name": "\U0001f4e6 go-file", "upload_root": app.config["UPLOAD_ROOT"]}
 
     @app.get("/api/health")
     def health() -> Response:
@@ -53,8 +53,7 @@ def build_app() -> Flask:
         out: list[dict[str, Any]] = []
         for f in q.all():
             links = ShareLink.query.filter_by(file_id=f.id).all()
-            out.append({"f": f, "links": links,
-                        "downloads": sum(l.downloads or 0 for l in links)})
+            out.append({"f": f, "links": links, "downloads": sum(l.downloads or 0 for l in links)})
         return out
 
     def _max_dl() -> int:
@@ -86,8 +85,9 @@ def build_app() -> Flask:
             db.session.commit()
         else:
             storage.delete(path)
-        link = create_link(rec.id, request.form.get("expiry", ""),
-                           request.form.get("password", ""), _max_dl())
+        link = create_link(
+            rec.id, request.form.get("expiry", ""), request.form.get("password", ""), _max_dl()
+        )
         flash("Uploaded %s - share link /share/%s" % (rec.name, link.token), "success")
         return redirect(url_for("file_detail", fid=rec.id))
 
@@ -100,8 +100,9 @@ def build_app() -> Flask:
     @app.post("/f/<int:fid>/link")
     def add_link(fid: int) -> WerkzeugResponse:
         f = db.get_or_404(File, fid)
-        link = create_link(f.id, request.form.get("expiry", ""),
-                           request.form.get("password", ""), _max_dl())
+        link = create_link(
+            f.id, request.form.get("expiry", ""), request.form.get("password", ""), _max_dl()
+        )
         flash("Created share link /share/%s" % link.token, "success")
         return redirect(url_for("file_detail", fid=f.id))
 
@@ -122,19 +123,23 @@ def build_app() -> Flask:
         if request.method == "POST":
             link, err = check_link(token, request.form.get("password", ""))
             if err:
-                return render_template("share.html", err=err, need_password=True,
-                                       link=None, f=None, token=token)
+                return render_template(
+                    "share.html", err=err, need_password=True, link=None, f=None, token=token
+                )
         else:
             link, err = check_link(token)
             if err == "bad password":
-                return render_template("share.html", err=None, need_password=True,
-                                       link=None, f=None, token=token)
+                return render_template(
+                    "share.html", err=None, need_password=True, link=None, f=None, token=token
+                )
             if err:
-                return render_template("share.html", err=err, need_password=False,
-                                       link=None, f=None, token=token), 404
+                return render_template(
+                    "share.html", err=err, need_password=False, link=None, f=None, token=token
+                ), 404
         f = db.session.get(File, link.file_id)
-        return render_template("share.html", err=None, need_password=False,
-                               link=link, f=f, token=token)
+        return render_template(
+            "share.html", err=None, need_password=False, link=link, f=f, token=token
+        )
 
     return app
 

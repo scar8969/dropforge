@@ -6,6 +6,7 @@
 
 Talks to a running instance (see README: python wsgi.py).
 """
+
 import argparse
 import json
 import os
@@ -24,8 +25,9 @@ def _call(
     headers: dict[str, str] | None = None,
     base: str | None = None,
 ) -> tuple[int, bytes]:
-    req = urllib.request.Request((base or DEFAULT_BASE).rstrip("/") + path,
-                                 data=data, method=method, headers=headers or {})
+    req = urllib.request.Request(
+        (base or DEFAULT_BASE).rstrip("/") + path, data=data, method=method, headers=headers or {}
+    )
     with urllib.request.urlopen(req) as r:
         return r.status, r.read()
 
@@ -35,20 +37,33 @@ def cmd_put(args: argparse.Namespace) -> int:
     with open(args.path, "rb") as f:
         data = f.read()
     fields: list[bytes] = []
-    for name, value in (("expiry", args.expiry), ("password", args.password),
-                        ("max_downloads", str(args.limit or 0))):
+    for name, value in (
+        ("expiry", args.expiry),
+        ("password", args.password),
+        ("max_downloads", str(args.limit or 0)),
+    ):
         if value:
             fields.append(
                 f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n'.encode()
             )
-    body = (b"".join(fields)
-            + (f"--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; "
-               f"filename=\"{os.path.basename(args.path)}\"\r\n"
-               "Content-Type: application/octet-stream\r\n\r\n").encode()
-            + data + f"\r\n--{boundary}--\r\n".encode())
+    body = (
+        b"".join(fields)
+        + (
+            f'--{boundary}\r\nContent-Disposition: form-data; name="file"; '
+            f'filename="{os.path.basename(args.path)}"\r\n'
+            "Content-Type: application/octet-stream\r\n\r\n"
+        ).encode()
+        + data
+        + f"\r\n--{boundary}--\r\n".encode()
+    )
     try:
-        status, out = _call("POST", "/api/upload", body,
-                            {"Content-Type": f"multipart/form-data; boundary={boundary}"}, args.base)
+        status, out = _call(
+            "POST",
+            "/api/upload",
+            body,
+            {"Content-Type": f"multipart/form-data; boundary={boundary}"},
+            args.base,
+        )
     except urllib.error.HTTPError as exc:
         print("upload failed: HTTP %s %s" % (exc.code, exc.read().decode("utf-8", "replace")))
         return 1
@@ -70,7 +85,10 @@ def cmd_ls(args: argparse.Namespace) -> int:
         return 0
     print("%-6s %-32s %10s %6s %10s" % ("id", "name", "size", "links", "downloads"))
     for f in files:
-        print("%-6s %-32s %10s %6s %10s" % (f["id"], f["name"][:32], f["size"], f["links"], f["downloads"]))
+        print(
+            "%-6s %-32s %10s %6s %10s"
+            % (f["id"], f["name"][:32], f["size"], f["links"], f["downloads"])
+        )
     return 0
 
 
