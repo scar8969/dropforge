@@ -4,7 +4,7 @@ Every line below was produced by a command run against this exact checkout, on t
 
 | | |
 | --- | --- |
-| Generated | 2026-10-19 02:44 |
+| Generated | 2026-10-19 09:38 |
 | Python | 3.14.7 |
 | Platform | Windows 11 |
 
@@ -15,7 +15,7 @@ python -m pytest -q
 ```
 
 - exit code **0**
-- 132 passed in 18.52s
+- 132 passed in 19.45s
 
 ## Static gates
 
@@ -38,6 +38,23 @@ The application was imported through `wsgi.py` and each GET path declared in `op
 | 200 | `/api/files` | 13 | application/json |
 
 4 paths walked, 0 of them raised or answered 5xx.
+
+## CLI
+
+```
+usage: gofile [-h] [--base BASE] {put,ls} ...
+
+go-file command line client
+
+positional arguments:
+  {put,ls}
+    put        upload a file and create a share link
+    ls         list uploaded files
+
+options:
+  -h, --help   show this help message and exit
+  --base BASE  base URL of a running instance
+```
 
 ## Screenshots
 

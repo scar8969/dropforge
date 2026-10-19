@@ -114,3 +114,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     code: int = handler(args)
     return code
+
+
+if __name__ == "__main__":  # pragma: no cover - manual entry point
+    raise SystemExit(main())
